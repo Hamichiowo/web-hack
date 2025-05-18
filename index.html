@@ -9,7 +9,6 @@
   ws.onmessage = (e) => {
     try {
       const msg = JSON.parse(e.data).message;
-      // 發送 flag 回 WebSocket，夾帶你控制的格式
       ws.send(JSON.stringify({ message: "from_admin: " + msg }));
     } catch (err) {}
   };

